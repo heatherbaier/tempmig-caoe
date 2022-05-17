@@ -1,0 +1,19 @@
+#!/bin/tcsh
+#PBS -N head_node
+#PBS -l walltime=72:00:00
+#PBS -j oe
+
+
+source "/usr/local/anaconda3-2021.05/etc/profile.d/conda.csh"
+module load use.own anaconda3/2021.05 meltemi/openmpi-3.1.4 gcc/9.3.0
+unsetenv PYTHONPATH
+conda activate mpitorch
+
+cd mpi_pytorch
+
+rm date.txt
+date "+%F, %T" > date.txt
+
+# python3 run.py
+
+mpirun python run.py $PPN $NODES
