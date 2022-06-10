@@ -31,6 +31,8 @@ config, _ = get_config()
 @record
 def main(rank, model_group, imagery_list, worker_map):
 
+    print("in main!!")
+
     ######################################################
     # Load rank data
     ######################################################    
@@ -189,6 +191,9 @@ if __name__ == "__main__":
         os.mkdir(os.path.join(config.records_dir, "models"))
 
 
+    print("done to here!")
+
+
     ###########################################################################
     # Get the sorted imagery list and make the worker -> imagery list index map
     ###########################################################################
@@ -212,9 +217,7 @@ if __name__ == "__main__":
     # Initialize RPC and the evaluator on all ranks (if using RPC)
     ###########################################################################
     # if config.use_rpc:
-
     #     rpc.init_rpc(f"worker_{rank}", rank = rank, world_size = world_size, rpc_backend_options = rpc.TensorPipeRpcBackendOptions(_transports=["uv"], rpc_timeout = 5000))
-
     #     eval = Evaluator()
     #     eval_rref = eval.evaluator_rref
 
@@ -238,4 +241,4 @@ if __name__ == "__main__":
 
     # """ whoop whoop """
     # if config.use_rpc:
-    #     r20 pc.shutdown()
+    #     rpc.shutdown()

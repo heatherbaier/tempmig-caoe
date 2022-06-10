@@ -182,9 +182,12 @@ def reverse_size(files_lists, size_dict):
 
 @record
 def organize_data(base_dir, ppn, nodes):
+
+    print("in organize data!")
     
     # Get a list of the municipalities
-    munis = os.listdir(base_dir)
+    munis = os.listdir(base_dir)[0:50]
+    print(munis)
     munis = [i for i in munis if i.startswith("484")]
         
     # Sort the municipalities from biggest to smallest size
@@ -195,13 +198,15 @@ def organize_data(base_dir, ppn, nodes):
     for x in munis:
         size_dict[os.stat(base_dir + x).st_size] = base_dir + x
                     
-    # Change the munis list to be image sizes then reverse it
+    # Sort the munis list to be by image size then reverse it
     munis = [os.stat(base_dir + x).st_size for x in munis]
     munis.reverse()
         
     files_lists = sublist_creator(munis, nodes)
     workers = make_worker_list(files_lists, ppn)
     image_list = reverse_size(files_lists, size_dict)
+
+    print("leaving organize data!")
         
     return image_list, workers
 
